@@ -1,9 +1,7 @@
 import { type APIUser } from "discord-api-types/v10";
 
-export const TOKEN_REGEX = /[A-Za-z\d]{24,28}\.[\w-]{6}\.[\w-]{38}/g;
-
-// TODO: Implement function to check old tokens
-export const TOKEN_REGEX_LEGACY = /[A-Za-z\d]{24,28}\.[\w-]{6}\.[\w-]{27,38}/g;
+// TODO: Implement function to check old tokens, remove 27 group
+export const TOKEN_REGEX = /[A-Za-z\d]{24,28}\.[\w-]{6}\.[\w-]{27,38}/g;
 
 export const BADGE_FLAGS = Object.freeze({
   DISCORD_EMPLOYEE: 1 << 0,
