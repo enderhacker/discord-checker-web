@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        @apply scroll-smooth bg-gray-900 leading-relaxed text-neutral-100 antialiased;
+    }
+
+    html, body {
+        @apply max-w-[100vw] overflow-x-hidden;
+    }
+
+    ::selection {
+        @apply bg-blurple text-white;
+    }
+}
+
+@layer utilities {
+    .background-grid {
+        background-size: 30px 30px;
+        background-image: linear-gradient(to right, grey 1px, transparent 1px),
+        linear-gradient(to bottom, grey 1px, transparent 1px);
+        mask-image: linear-gradient(to bottom, transparent, black, transparent);
+    }
+}
