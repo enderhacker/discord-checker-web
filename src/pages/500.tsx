@@ -4,18 +4,18 @@ import BackgroundGrid from "~/components/BackgroundGrid";
 import Header from "~/components/Header";
 import Link from "next/link";
 
-const Custom404: React.FC = () => {
+const Custom500: React.FC = () => {
   return (
     <>
-      <NextSeo title="Oops! Page Not Found" />
+      <NextSeo title="Oops! Internal Server Error" />
       <Header />
       <main className="flex h-[calc(100vh-300px)] items-center justify-center text-center">
         <BackgroundGrid />
         <Container className="relative">
-          <span className="text-9xl font-bold">404</span>
-          <h1 className="text-xl font-medium">Page Not Found</h1>
+          <span className="text-9xl font-bold">500</span>
+          <h1 className="text-xl font-medium">Internal Server Error</h1>
           <p className="mt-4 text-base text-neutral-200">
-            The page you are looking for does not seem to exist.
+            Your request could not be processed. Please try again later.
           </p>
           <Link
             href="/"
@@ -29,4 +29,4 @@ const Custom404: React.FC = () => {
   );
 };
 
-export default Custom404;
+export default Custom500;
