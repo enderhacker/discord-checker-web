@@ -20,7 +20,7 @@ model DiscordAccount {
   accent_color  Int?
   banner        String?
   bot           Boolean?
-  flags         Int?
+  flags         BigInt?
   global_name   String?
   locale        String?
   mfa_enabled   Boolean?

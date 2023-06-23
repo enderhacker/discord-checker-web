@@ -7,7 +7,12 @@ import {
 import { useState } from "react";
 
 type DiscordAvatarProps = {
-  user: APIUser;
+  user: {
+    username: APIUser["username"];
+    id: APIUser["id"];
+    discriminator: APIUser["discriminator"];
+    avatar?: APIUser["avatar"];
+  };
   size?: number;
   format?: UserAvatarFormat;
 };

@@ -22,7 +22,10 @@ export const BADGE_FLAGS = Object.freeze({
   USES_AUTOMOD: 1 << 24,
 }) as { [index: string]: number };
 
-export const hasFlag = (user: APIUser, bit: string): boolean => {
+export const hasFlag = (
+  user: { flags?: APIUser["flags"] | bigint | null },
+  bit: string
+): boolean => {
   if (!user.flags) {
     return false;
   }
@@ -32,7 +35,7 @@ export const hasFlag = (user: APIUser, bit: string): boolean => {
     return false;
   }
 
-  return (user.flags & flagForBit) === flagForBit;
+  return (BigInt(user.flags) & BigInt(flagForBit)) === BigInt(flagForBit);
 };
 
 export const toTitleCase = (str: string): string => {
@@ -41,11 +44,16 @@ export const toTitleCase = (str: string): string => {
   });
 };
 
-export const isMigratedUser = (user: APIUser): boolean => {
+export const isMigratedUser = (user: {
+  discriminator: APIUser["discriminator"];
+}): boolean => {
   return user.discriminator === "0";
 };
 
-export const usernameOrTag = (user: APIUser): string => {
+export const usernameOrTag = (user: {
+  username: APIUser["username"];
+  discriminator: APIUser["discriminator"];
+}): string => {
   if (isMigratedUser(user)) {
     return `@${user.username}`;
   }

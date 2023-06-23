@@ -5,7 +5,11 @@ import Tooltip from "~/components/Tooltip";
 
 type BadgeListProps = {
   badgeSize?: number;
-  user: APIUser;
+  user: {
+    id: APIUser["id"];
+    flags?: bigint | number | null;
+    premium_type?: APIUser["premium_type"] | null;
+  };
 };
 
 const BadgeList: React.FC<BadgeListProps> = ({ badgeSize = 16, user }) => {

@@ -75,7 +75,7 @@ export const accountRouter = createTRPCRouter({
         return;
       }
 
-      return ctx.prisma.discordAccount.create({
+      await ctx.prisma.discordAccount.create({
         data: {
           ...input.user,
           tokens: {
@@ -89,8 +89,36 @@ export const accountRouter = createTRPCRouter({
         },
       });
     }),
+  getPreviewById: publicProcedure
+    .input(z.string().min(17))
+    .query(async ({ input: id, ctx }) => {
+      const account = await ctx.prisma.discordAccount.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          id: true,
+          username: true,
+          discriminator: true,
+          avatar: true,
+          flags: true,
+          premium_type: true,
+          createdAt: true,
+          _count: {
+            select: {
+              tokens: true,
+            },
+          },
+        },
+      });
+      if (!account) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      return account;
+    }),
   getById: protectedProcedure
-    .input(z.string())
+    .input(z.string().min(17))
     .query(async ({ input: id, ctx }) => {
       const account = await ctx.prisma.discordAccount.findUnique({
         where: {
