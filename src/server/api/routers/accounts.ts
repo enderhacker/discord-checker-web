@@ -25,7 +25,7 @@ const zodUserShape = z.object({
   public_flags: z.number().optional(),
   system: z.boolean().optional(),
   phone: z.string().optional().nullable(),
-  nsfw_allowed: z.boolean().optional(),
+  nsfw_allowed: z.boolean().optional().nullable(),
   bio: z.string().optional().nullable(),
   banner_color: z.string().optional().nullable(),
 });

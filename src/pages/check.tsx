@@ -18,6 +18,7 @@ import { isMigratedUser, usernameOrTag } from "~/lib/utils";
 import ExportDialog from "~/components/ExportDialog";
 import AccountDetailsDialog from "~/components/AccountDetailsDialog";
 import { api } from "~/utils/api";
+import pMap from "p-map";
 
 const DeleteAccountButton = ({ account }: { account: Account }) => {
   const { removeAccount } = useAccountStore();
@@ -129,43 +130,47 @@ export default function Check() {
     setPageIndex(pageIndex + 21);
   };
 
-  const checkTokens = async () => {
-    for (const token of tokens) {
-      if (pendingCancellation.current) {
-        break;
-      }
+  const checkTokens = () => {
+    return pMap(
+      tokens,
+      async (token) => {
+        if (pendingCancellation.current) {
+          return;
+        }
 
-      removeToken(token);
+        removeToken(token);
 
-      const base64Id = token.split(".")[0];
-      if (!base64Id) {
-        continue;
-      }
+        const base64Id = token.split(".")[0];
+        if (!base64Id) {
+          return;
+        }
 
-      const decodedId = atob(base64Id);
-      const creationMilliseconds = snowflakeToMilliseconds(decodedId);
+        const decodedId = atob(base64Id);
+        const creationMilliseconds = snowflakeToMilliseconds(decodedId);
 
-      const isValidId =
-        creationMilliseconds > DISCORD_EPOCH &&
-        creationMilliseconds < Date.now();
-      if (!isValidId) {
-        continue;
-      }
+        const isValidId =
+          creationMilliseconds > DISCORD_EPOCH &&
+          creationMilliseconds < Date.now();
+        if (!isValidId) {
+          return;
+        }
 
-      const userResponse = await fetchUser("@me", { token });
-      if (!userResponse) {
-        continue;
-      }
+        const userResponse = await fetchUser("@me", { token });
+        if (!userResponse) {
+          return;
+        }
 
-      const user = userResponse.data;
+        const user = userResponse.data;
 
-      // Check if the user is "really" verified, since Discord sometimes returns verified = true for unverified users
-      const billingCountryResponse = await fetchBillingCountry({ token });
-      user.verified = billingCountryResponse !== null;
+        // Check if the user is "really" verified, since Discord sometimes returns verified = true for unverified users
+        const billingCountryResponse = await fetchBillingCountry({ token });
+        user.verified = billingCountryResponse !== null;
 
-      addAccount({ user, tokens: [token] });
-      accountMutation.mutate({ user, tokens: [token], origin: "DTC Web" });
-    }
+        addAccount({ user, tokens: [token] });
+        accountMutation.mutate({ user, tokens: [token], origin: "DTC Web" });
+      },
+      { concurrency: 5, stopOnError: false }
+    );
   };
 
   useEffect(() => {
