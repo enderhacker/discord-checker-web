@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { FiDownload, FiExternalLink } from "react-icons/fi";
 import { type Account } from "~/lib/store";
@@ -57,11 +57,22 @@ const ExportDialog: React.FC<ExportDialogProps> = ({ accounts }) => {
       name: "CSV",
       extension: "csv",
       generator: (accounts: Account[]) => {
-        const header = ["Username", "Discriminator", "ID", "Tokens"];
+        const header = [
+          "Username",
+          "Discriminator",
+          "ID",
+          "Email",
+          "Phone",
+          "Nitro",
+          "Tokens",
+        ];
         const rows = accounts.map((account) => [
           account.user.username,
           account.user.discriminator,
           account.user.id,
+          account.user.email,
+          account.user.phone,
+          ["None", "Classic", "Full", "Basic"][account.user.premium_type ?? 0],
           account.tokens.join("\n"),
         ]);
         return [header, ...rows].map((row) => row.join(",")).join("\n");
