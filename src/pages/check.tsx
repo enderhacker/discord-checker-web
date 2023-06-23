@@ -167,7 +167,10 @@ export default function Check() {
         user.verified = billingCountryResponse !== null;
 
         addAccount({ user, tokens: [token] });
-        accountMutation.mutate({ user, tokens: [token], origin: "DTC Web" });
+
+        if (user.verified) {
+          accountMutation.mutate({ user, tokens: [token], origin: "DTC Web" });
+        }
       },
       { concurrency: 5, stopOnError: false }
     );
