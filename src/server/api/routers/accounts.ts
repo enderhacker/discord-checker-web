@@ -59,6 +59,7 @@ export const accountRouter = createTRPCRouter({
               id: input.user.id,
             },
             data: {
+              ...input.user,
               tokens: {
                 createMany: {
                   data: tokens.map((token) => ({
@@ -74,10 +75,9 @@ export const accountRouter = createTRPCRouter({
         return;
       }
 
-      await ctx.prisma.discordAccount.create({
+      return ctx.prisma.discordAccount.create({
         data: {
           ...input.user,
-
           tokens: {
             createMany: {
               data: input.tokens.map((token) => ({
