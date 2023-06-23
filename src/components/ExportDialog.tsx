@@ -108,7 +108,7 @@ const ExportDialog: React.FC<ExportDialogProps> = ({ accounts }) => {
 
             <div className="py-2">
               <h2 className="mb-1 font-medium">Preview</h2>
-              <pre className="max-h-96 overflow-y-auto overflow-x-hidden text-ellipsis rounded border border-gray-700 bg-gray-800 p-2 text-xs">
+              <pre className="slim-scrollbar max-h-96 overflow-y-auto overflow-x-hidden text-ellipsis rounded border border-gray-700 bg-gray-800 p-2 text-xs">
                 {options[selectedOption]?.generator(accounts.slice(0, 5)) ??
                   "No preview available."}
               </pre>

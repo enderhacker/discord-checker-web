@@ -8,7 +8,7 @@
     }
 
     html, body {
-        @apply max-w-[100vw] overflow-x-hidden;
+        @apply max-w-[100vw] overflow-x-hidden slim-scrollbar;
     }
 
     ::selection {
@@ -22,5 +22,25 @@
         background-image: linear-gradient(to right, grey 1px, transparent 1px),
         linear-gradient(to bottom, grey 1px, transparent 1px);
         mask-image: linear-gradient(to bottom, transparent, black, transparent);
+    }
+
+    .slim-scrollbar {
+        scrollbar-width: thin;
+    }
+
+    .slim-scrollbar::-webkit-scrollbar {
+        @apply w-[14px];
+    }
+
+    .slim-scrollbar::-webkit-scrollbar-thumb {
+        @apply rounded border-2 border-solid border-gray-900 bg-gray-600;
+    }
+
+    .slim-scrollbar::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-500/60;
+    }
+
+    .slim-scrollbar::-webkit-scrollbar-track {
+        @apply bg-gray-900;
     }
 }

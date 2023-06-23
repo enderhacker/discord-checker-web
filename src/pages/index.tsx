@@ -72,7 +72,7 @@ export default function Home() {
           </div>
 
           <textarea
-            className="w-full resize-none rounded border-2 border-blurple bg-gray-800 p-2 font-mono leading-tight caret-blurple outline-none focus:border-blurple-dark"
+            className="slim-scrollbar w-full resize-none rounded border-2 border-blurple bg-gray-800 p-2 font-mono leading-tight caret-blurple outline-none focus:border-blurple-dark"
             spellCheck={false}
             placeholder={"Paste your tokens here, one per line."}
             rows={15}
