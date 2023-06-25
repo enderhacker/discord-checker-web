@@ -3,6 +3,49 @@ import { type APIUser } from "discord-api-types/v10";
 // TODO: Implement function to check old tokens, remove 27 group
 export const TOKEN_REGEX = /[A-Za-z\d]{24,28}\.[\w-]{6}\.[\w-]{27,38}/g;
 
+const LOCALES_MAP = [
+  ["ar", "ARG"],
+  ["bg", "BGR"],
+  ["zh-CN", "CHN"],
+  ["zh-TW", "TWN"],
+  ["hr", "HUN"],
+  ["cs", "CZE"],
+  ["da", "DNK"],
+  ["nl", "NLD"],
+  ["en-GB", "GBR"],
+  ["en-US", "USA"],
+  ["fi", "FIN"],
+  ["fr", "FRA"],
+  ["de", "DEU"],
+  ["el", "GRC"],
+  ["hi", "IDN"],
+  ["hu", "HUN"],
+  ["id", "IDN"],
+  ["it", "ITA"],
+  ["ja", "JPN"],
+  ["ko", "KOR"],
+  ["lt", "LTU"],
+  ["no", "NOR"],
+  ["pl", "POL"],
+  ["pt-BR", "BRA"],
+  ["ro", "ROU"],
+  ["ru", "RUS"],
+  ["es-ES", "ESP"],
+  ["sv-SE", "SWE"],
+  ["th", "THA"],
+  ["tr", "TUR"],
+  ["uk", "UKR"],
+  ["vi", "VNM"],
+];
+
+export const localeToCountry = (locale: string | null) => {
+  locale ??= "en-US";
+
+  return LOCALES_MAP.find((arr) => {
+    return arr[0] === locale;
+  })?.[1];
+};
+
 export const BADGE_FLAGS = Object.freeze({
   DISCORD_EMPLOYEE: 1 << 0,
   PARTNERED_SERVER_OWNER: 1 << 1,
