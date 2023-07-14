@@ -10,13 +10,13 @@ const config: DefaultSeoProps = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://discord-checker.janic.dev/",
+    url: "https://tokenchecker.neptunediscord.xyz/",
     siteName: title,
     title: "Check your Discord Tokens easily",
     description,
     images: [
       {
-        url: "https://discord-checker.janic.dev/og.png",
+        url: "https://tokenchecker.neptunediscord.xyz//og.png",
         width: 1200,
         height: 630,
         alt: title,
